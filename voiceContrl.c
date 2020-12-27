@@ -49,3 +49,5 @@ struct InputCommander *addVoiceContrlToInPutLink(struct InputCommander *phead)
         return phead;
     }
 }
+
+//测试文件
