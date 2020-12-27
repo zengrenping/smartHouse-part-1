@@ -43,7 +43,7 @@ int getSocketCMD(struct InputCommander *socketContrl)
 int InitSocketCMD(struct InputCommander *socketContrl, char *ipAddr, char *port)
 {
     int s_fd;
-    struct sockaddr_in s_addr;
+   
     s_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (s_fd == -1)
     {
@@ -55,10 +55,11 @@ int InitSocketCMD(struct InputCommander *socketContrl, char *ipAddr, char *port)
     {
         printf("socket创建成功。\n");
     }
-
-    s_addr.sin_family = AF_INET;
-    s_addr.sin_port = htons(socketContrl->port);
-    inet_aton(socketContrl->ipAddress, &s_addr.sin_addr); //
+    struct sockaddr_in s_addr = {
+        .sin_family = AF_INET,
+        .sin_port = htons(socketContrl->port)
+    };
+    inet_aton(socketContrl->ipAddress, &s_addr.sin_addr); //这个无法在结构体定义中写入，不过可以写在外面
 
     if (bind(s_fd, (struct sockaddr *)&s_addr, sizeof(struct sockaddr_in)) == -1)
     {
