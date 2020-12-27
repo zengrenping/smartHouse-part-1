@@ -1,13 +1,3 @@
-#include <sys/types.h>  /* See NOTES */
-#include <sys/socket.h>
-#include <errno.h>
-#include <arpa/inet.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-
 #include "InputCommand.h"
 
 int getSocketCMD(struct InputCommander *socketContrl)
@@ -62,7 +52,7 @@ int InitSocketCMD(struct InputCommander *socketContrl, char *ipAddr, char *port)
     {
         printf("socket创建成功。\n");
     }
-    
+
     /*********************这里是对IP进行配置，但这样的写法可能有问题***********************************/
     struct sockaddr_in s_addr = {
         .sin_family = AF_INET,
