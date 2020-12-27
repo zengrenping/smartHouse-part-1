@@ -1,28 +1,23 @@
 #include "InputCommand.h"
 
 
-/*
-struct InputCommander
+int InitVoicCMD(struct InputCommander *voiceContrl, char *ipAddr, char *port)
 {
-    char commandName[128];                                    //指令名称
-    char relCMD[32];                                          //真实指令
-    int (*commandInit)(char *name, char *ipAddr, char *port); //初始化socket连接可以用
-    int (*getCommand)(char *cmd);
-    char log[1024];
+    int fd;
+    if((fd = serialOpen(voiceContrl->commandName, 9600)) == -1 )//初始化串口
 
-    struct InputCommander *next;
-};
-*/
-
-int InitCMD(char *name, char *ipAddr, char *port)
-{
-
-
-
+    voiceContrl->fd = fd;
 }
 
-int getCMD(char *cmd)
+int getVoicCMD(struct InputCommander *voiceContrl)
 {
+    int nread = 0;
+    nread = read(voiceContrl->fd, voiceContrl->commandName, sizeof(voiceContrl->commandName));
+    if(nread == 0){
+        printf("获取串口“语音模块”指令超时。\n");
+    }else{
+        return nread;
+    }
 
 
 }
@@ -31,11 +26,28 @@ int getCMD(char *cmd)
 struct InputCommander voiceContrl = {
 
     .commandName = "voiceContrl",
+    .deviceName = "/dev/ttyAMA0",
     .relCMD = {'\0'},
-    .commandInit = InitCMD,
-    .getCommand  = getCMD,
+    .commandInit = InitVoicCMD,
+    .getCommand  = getVoicCMD,
     .log = {'\0'},
 
-    .next = NULL; 
+    .next = NULL
 
 };
+
+struct InputCommander *addVoiceContrlToInPutLink(struct InputCommander *phead)
+{
+    if (phead == NULL)
+    {
+        phead = &voiceContrl;
+        return phead;
+    }
+    else
+    {
+        voiceContrl.next = phead;
+        phead = &voiceContrl;
+
+        return phead;
+    }
+}
