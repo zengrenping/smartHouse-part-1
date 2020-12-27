@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "contrlDevices.h"
+#include "InputCommand.h"
 
 struct Devieces *findDeviecesByName(char *name, struct Devieces *head)
 {
@@ -11,7 +12,7 @@ struct Devieces *findDeviecesByName(char *name, struct Devieces *head)
 	}else{
 	
 		while(p != NULL){
-			if(!strcmp(name, p->deviecesName)){
+			if(!strcmp(name, p->deviecesName)){//对比输入指令和每个结构体中的指令是否一致
 				return p;			
 			}
 			p = p->next;
@@ -29,9 +30,10 @@ int main()
 	int initWPSet;
 	
 	//1 指令工厂初始化
-	struct Devieces *tmp = NULL;
-	struct Devieces *pDeviecHead = NULL;
-	/*========================加链表=====================================*/
+	struct Devieces *tmp = NULL;//实际执行的指令的设备链表
+	struct Devieces *pDeviecHead = NULL;//设备链表头
+	struct InputCommander *pInPutHead = NULL;//输入设备链表头
+	/*========================加IO设备链表=====================================*/
 	
 	pDeviecHead = addBathroomLightToDeviecLink(pDeviecHead);//将指令加入指令列表中
 	pDeviecHead = addUpstairLightToDeviecLink(pDeviecHead);
@@ -39,6 +41,11 @@ int main()
 	pDeviecHead = addlivingRoomLightToDeviecLink(pDeviecHead);
 
 	pDeviecHead = addfireSateToDeviecLink(pDeviecHead);//火灾传感器输入
+
+/*==========================加语音/Socket链表===================================*/
+
+	pInPutHead = addVoiceContrlToInPutLink(pInPutHead);
+	pInPutHead = addSocketContrlToInPutLink(pInPutHead);
 	/*=============================================================*/
 
 	initWPSet = wiringPiSetup();

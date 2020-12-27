@@ -22,8 +22,9 @@ int bathroomLightChangeST(int status)
 
 
 }
+/*每个设备都使用struct Devieces 结构体 进行内容的配置*/
 
-struct Devieces bathroomLight = {
+struct Devieces bathroomLight = {  
  	.deviecesName  = "bathroomLight",
  	.open  = bathroomLightOpen,
  	.close = bathroomLightClose,
