@@ -80,6 +80,7 @@ void *vociec_doMain()
 		else
 		{
 			while(1){
+				
 				nread = vociecHead->getCommand(vociecHead); 
 				if (nread == 0)
 				{
@@ -189,10 +190,13 @@ int main()
 	//3.2 socket线程
 	pthread_create(&socket_pthread, NULL, socket_doMain, NULL);
 
+	pthread_join(vociec_pthread, NULL);//线程等待
+	pthread_join(socket_pthread, NULL);
+
 	//3.3 摄像头线程
 
 	//3.4 火灾线程
-
+/*
 	initWPSet = wiringPiSetup();
 	if(initWPSet == -1){
 		printf("端口初始化失败。\n");
@@ -213,11 +217,8 @@ int main()
 		memset(tmp,'\0', sizeof(struct Devieces));//清空结构体数据
 	}
 	
-
+*/
 	
-
-	
-
 
 	return 0;
 }

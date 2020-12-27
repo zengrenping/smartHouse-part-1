@@ -16,6 +16,8 @@ int getSocketCMD(struct InputCommander *socketContrl)
     }
     else
     {
+        memset(&socketContrl->relCMD, '\0', sizeof(socketContrl->relCMD));//读指令前需要将上次的内容清除
+
         rec_t = recv(c_fd, socketContrl->relCMD, sizeof(socketContrl->relCMD), 0);
         if (rec_t == -1)
         {
@@ -41,6 +43,7 @@ int getSocketCMD(struct InputCommander *socketContrl)
 int InitSocketCMD(struct InputCommander *socketContrl, char *ipAddr, char *port)
 {
     int s_fd;
+    struct sockaddr_in s_addr;
     s_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (s_fd == -1)
     {
@@ -53,14 +56,9 @@ int InitSocketCMD(struct InputCommander *socketContrl, char *ipAddr, char *port)
         printf("socket创建成功。\n");
     }
 
-    /*********************这里是对IP进行配置，但这样的写法可能有问题***********************************/
-    struct sockaddr_in s_addr = {
-        .sin_family = AF_INET,
-        .sin_port   = htons(socketContrl->port),
-        .sin_addr   = inet_aton(socketContrl->ipAddress, &s_addr.sin_addr)//很有可能报错
-
-    }; //IP配置所需
-    /********************************************************/
+    s_addr.sin_family = AF_INET;
+    s_addr.sin_port = htons(socketContrl->port);
+    inet_aton(socketContrl->ipAddress, &s_addr.sin_addr); //
 
     if (bind(s_fd, (struct sockaddr *)&s_addr, sizeof(struct sockaddr_in)) == -1)
     {
@@ -69,7 +67,9 @@ int InitSocketCMD(struct InputCommander *socketContrl, char *ipAddr, char *port)
         exit(-1);
     }
 
-    listen(s_fd, 5);
+    if(listen(s_fd, 5) != -1){
+        printf("程序正在监听。\n");
+    }
 
     socketContrl->s_fd = s_fd;//将这个网络描述符直接传进街头体中，以便后面传结构体可直接调用
 
