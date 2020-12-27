@@ -103,7 +103,7 @@ void *readMain()
 	if (rec_t == -1)
 	{
 		printf("内容接收失败。\n");
-		return -1;
+		
 	}
 	else if (rec_t == 0)
 	{
@@ -145,7 +145,7 @@ void *socket_doMain()
 			}
 			else
 			{
-				phtread_create(&read_thr, NULL, readMain, NULL);
+				pthread_create(&read_thr, NULL, readMain, NULL);
 			}
 		}
 	}
@@ -184,10 +184,10 @@ int main()
 	//3 线程池建立 线程如何建立/如何使用 
 	//原型：int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine) (void *),  void *arg);
 	//3.1 语音线程
-	pthread_create = (&vociec_pthread, NULL, vociec_doMain, NULL);
+	pthread_create(&vociec_pthread, NULL, vociec_doMain, NULL);
  
 	//3.2 socket线程
-	pthread_create = (&socket_pthread, NULL, socket_doMain, NULL);
+	pthread_create(&socket_pthread, NULL, socket_doMain, NULL);
 
 	//3.3 摄像头线程
 

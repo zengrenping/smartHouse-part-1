@@ -3,6 +3,14 @@
 #include <stdlib.h>
 #include <wiringSerial.h>
 #include <unistd.h>
+#include <sys/types.h> 
+#include <sys/socket.h>
+#include <errno.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 struct InputCommander
 {
