@@ -62,6 +62,7 @@ struct Devieces *findDeviecesByName(char *name, struct Devieces *head)
 void *vociec_doMain()
 {
 	int nread;
+	int voice;
 	struct InputCommander *vociecHead = NULL;
 	vociecHead = findInPutByName("voiceContrl", pInPutHead);
 	if(vociecHead == NULL)
@@ -72,7 +73,8 @@ void *vociec_doMain()
 	}
 	else
 	{
-		if(vociecHead->commandInit(vociecHead, NULL, NULL) ==-1 )
+		voice = vociecHead->commandInit(vociecHead, NULL, NULL);
+		if(voice == -1)
 		{
 			printf("vociec串口初始化失败。\n");
 			pthread_exit(NULL);
@@ -146,7 +148,7 @@ void *socket_doMain()
 			}
 			else
 			{
-				pthread_create(&read_thr, NULL, readMain, NULL);
+				pthread_create(&read_thr, NULL, readMain, NULL);//创建线程进行消息的接收
 			}
 		}
 	}
