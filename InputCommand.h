@@ -16,7 +16,8 @@ struct InputCommander
 {
 	char commandName[128];//指令名称
 	char deviceName[128];//设备名称
-	char relCMD[32];//真实指令
+	char relCMD[256];//真实指令
+	char wiPiCmd[32];//wiPi用的指令 open/close
 	int (*commandInit)(struct InputCommander *initInput, char *ipAddr, char *port); //初始化socket连接可以用
 	int (*getCommand)(struct InputCommander *initInput);
 	char log[1024];

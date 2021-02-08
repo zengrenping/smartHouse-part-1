@@ -18,6 +18,8 @@ int livingRoomLightInit(int pinNumb)
 
 int livingRoomLightChangeST(int status)
 {
+
+    
 }
 
 struct Devieces livingRoomLight = {
@@ -26,7 +28,8 @@ struct Devieces livingRoomLight = {
     .close = livingRoomLightClose,
     .devieceInit = livingRoomLightInit,
     .pinNumb = 23, //引脚号 (wiringPi定义)23
-    .changeStarus = livingRoomLightChangeST};
+    .changeStarus = livingRoomLightChangeST
+    };
 
 struct Devieces *addlivingRoomLightToDeviecLink(struct Devieces *phead)
 {
