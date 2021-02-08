@@ -88,6 +88,7 @@ struct InputCommander socketContrl = {
     .log = {'\0'},
     .port = 8899,
     .ipAddress = "192.168.124.8",
+    //.ipAddress = "192.168.16.102",
     .next = NULL
 
 };
